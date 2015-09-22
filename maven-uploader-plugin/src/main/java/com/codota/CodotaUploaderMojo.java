@@ -29,31 +29,28 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 @SuppressWarnings({"JavaDoc", "unused"})
 @Mojo(name = "upload")
-/**
- * @goal upload
- */
 public class CodotaUploaderMojo
         extends AbstractMojo {
 
     /**
      * Location of the target files.
      */
-    @Parameter(property = "buildDirectory", defaultValue = "${project.build.directory}", required = true)
+    @Parameter(defaultValue = "${project.build.directory}", required = true)
     private File buildDirectory;
 
     /**
      * Source directory.
      */
-    @Parameter(property = "sourceDirectory", defaultValue = "${project.build.sourceDirectory}", required =  true)
+    @Parameter(defaultValue = "${project.build.sourceDirectory}", required =  true)
     private File sourceDirectory;
 
-    @Parameter(property = "artifactId", defaultValue = "${project.artifactId}", readonly = true)
+    @Parameter(defaultValue = "${project.artifactId}", readonly = true)
     private String artifactId;
 
-    @Parameter(property = "groupId", defaultValue = "${project.groupId}", readonly = true)
+    @Parameter(defaultValue = "${project.groupId}", readonly = true)
     private String groupId;
 
-    @Parameter(property = "version", defaultValue = "${project.version}", readonly = true)
+    @Parameter(defaultValue = "${project.version}", readonly = true)
     private String version;
 
     /**

@@ -58,8 +58,6 @@ public class Uploader {
 
             putRequest.setHeader("enctype", "multipart/form-data");
             putRequest.setHeader("authorization", "bearer " + token);
-        System.out.println("TOKEN=" + token);
-        System.out.println("URL=" + uploadUrl);
             httpClient.execute(putRequest, new UploadResponseHandler());
     }
 
@@ -71,8 +69,6 @@ public class Uploader {
             HttpEntity entity = response.getEntity();
             String responseString = EntityUtils.toString(entity);
             final int statusCode = response.getStatusLine().getStatusCode();
-            System.out.println("CODE: " + statusCode);
-            System.out.println("LINE:" + responseString);
             if (statusCode == HttpStatus.SC_OK) {
                 System.out.println("Success! " + responseString);
             } else {
