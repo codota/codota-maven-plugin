@@ -110,7 +110,7 @@ public class CodotaUploaderMojo
             @Override
             public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)
                     throws IOException {
-                if (isJarFile(path)) {
+                if (shouldSendFile(path)) {
                     try {
                         getLog().info("Uploading " + path);
                         uploader.uploadFile(path.toFile());
@@ -159,8 +159,8 @@ public class CodotaUploaderMojo
         getLog().info("Codota token exists:" + (token != null));
     }
 
-    private boolean isJarFile(Path path) {
-        return path.toString().toLowerCase().endsWith(".jar");
+    private boolean shouldSendFile(Path path) {
+        return path.toString().toLowerCase().endsWith(".jar") || path.toString().toLowerCase().endsWith(".war");
     }
 
 
