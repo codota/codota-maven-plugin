@@ -18,30 +18,11 @@ Alternatively, you can clone this repo, build the from source and install the pl
 ### Uploading your artifacts for analysis
 To submit your code follow these simple steps:
 * [Create your private account at Codota](https://www.codota.com/submit-repo/maven)
-* Paste the following in your pom.xml under <plugins> - make sure to use the secure token you receive from Codota. Please make sure to keep your token private and secure.
-```
-<plugin>
-    <groupId>com.codota</groupId>
-    <artifactId>uploader</artifactId>
-    <version>1.0</version>
-    <configuration>
-        <endpoint>https://upload.codota.com/artifacts</endpoint>
-        <token>----------- *put your secure token here* -----------</token>
-    </configuration>
-    <executions>
-        <execution>
-            <id>codota-upload</id>
-            <phase>package</phase>
-            <!-- bind to the packaging phase -->
-            <goals>
-                <goal>upload</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
-```
-* Build your project including sources by running the following command in your project directory
-```
-mvn clean source:jar source:test-jar jar:test-jar package -DskipAssembly -DskipTests
-```
-  Indexing usually takes less than an hour - you'll get an email once it's ready
+* Build your project including sources and send to Codota for indexing by running the following command in your project directory
+    
+    ```
+    mvn clean source:jar source:test-jar jar:test-jar package com.codota:uploader:1.0:upload -Dcodota.token={your_token_here} -Dcodota.endpoint=https://upload.codota.com/artifacts -DskipAssembly -DskipTests -Dmaven.javadoc.skip=true -Dgpg.skip
+    ```
+    
+    Make sure to use the secure token you receive from Codota. Please make sure to keep your token private and secure.
+    Indexing usually takes less than an hour - you'll get an email once it's ready
