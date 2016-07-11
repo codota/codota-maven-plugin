@@ -4,14 +4,14 @@ Maven plugin for [indexing java/scala code in Codota](https://www.codota.com/ind
 You can easily send your Java code for indexing by adding this simple maven plugin which collects your artifacts and uploads them to your secure private Codota account.
 
 ### Installing the plugin
-* Download from [here](http://assets.codota.com/codota-maven-plugin/codota-uploader-1.0.jar) 
-* Install the codota plugin in your maven by running the following command:
+* The plugin is available [here](http://assets.codota.com/codota-maven-plugin/codota-uploader-1.0.jar) 
+* Install the codota plugin in your maven by running the following commands:
 ```
-  cd ~/Downloads (the directory in which you saved the plugin file) 
+  wget http://assets.codota.com/codota-maven-plugin/codota-uploader-1.0.jar
   mvn install:install-file -Dfile=codota-uploader-1.0.jar -DgroupId=com.codota -DartifactId=uploader -Dversion=1.0 -Dpackaging=jar
 ```
 
-Alternatively, you can build the plugin from source and install it:
+Alternatively, you can clone this repo, build the from source and install the plugin:
 
     mvn clean package install
 
