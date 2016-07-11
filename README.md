@@ -26,7 +26,7 @@ To submit your code follow these simple steps:
     <version>1.0</version>
     <configuration>
         <endpoint>https://upload.codota.com/artifacts</endpoint>
-        <token>----------- *put your secure token here* -----------<token>
+        <token>----------- *put your secure token here* -----------</token>
     </configuration>
     <executions>
         <execution>
