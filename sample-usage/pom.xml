@@ -29,7 +29,7 @@
         <plugins>
             <plugin>
                 <groupId>com.codota</groupId>
-                <artifactId>uploader</artifactId>
+                <artifactId>codota-uploader</artifactId>
                 <version>1.0</version>
                 <configuration>
                     <endpoint>https://upload.codota.com/artifacts/</endpoint>
