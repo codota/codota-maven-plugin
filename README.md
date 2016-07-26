@@ -15,7 +15,7 @@ To submit your code follow these simple steps:
     Make sure to use the secure token you receive from Codota. Please make sure to keep your token private and secure.
     Indexing usually takes less than an hour - you'll get an email once it's ready
 
-* To permanently add upload to Codot to your build, paste the following in your pom.xml under <build><plugins> - make sure to use the secure token you receive from Codota. Please make sure to keep your token private and secure.
+* To permanently add upload to Codota in your build, paste the following in your pom.xml under <build><plugins> - make sure to use the secure token you receive from Codota. Please make sure to keep your token private and secure.
     ```
     <plugin>    
          <groupId>com.codota</groupId>
