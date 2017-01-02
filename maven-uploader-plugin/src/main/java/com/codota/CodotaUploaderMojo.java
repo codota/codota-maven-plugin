@@ -117,6 +117,7 @@ public class CodotaUploaderMojo
                         getLog().info("Done.");
                     } catch (Exception e) {
                         getLog().error("Error: " + e.getMessage());
+                        getLog().error("Failed to upload file to codota: " + path);
                     }
                 }
                 return FileVisitResult.CONTINUE;

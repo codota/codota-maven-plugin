@@ -58,11 +58,18 @@ public class Uploader {
 
             putRequest.setHeader("enctype", "multipart/form-data");
             putRequest.setHeader("authorization", "bearer " + token);
-            httpClient.execute(putRequest, new UploadResponseHandler());
+            httpClient.execute(putRequest, new UploadResponseHandler(file));
     }
 
 
     private class UploadResponseHandler implements ResponseHandler<Object> {
+
+
+        private File file;
+
+        public UploadResponseHandler(File file) {
+            this.file = file;
+        }
         @Override
         public Object handleResponse(HttpResponse response)
                 throws IOException {
@@ -71,8 +78,10 @@ public class Uploader {
             final int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == HttpStatus.SC_OK) {
                 System.out.println("Success! " + responseString);
+                System.out.println("File uploaded to codota: " + file);
             } else {
                 System.out.println("Request failed with status " + responseString + response.toString());
+                 System.out.println("Failed to upload file to codota: " + file);
             }
             return null;
         }
