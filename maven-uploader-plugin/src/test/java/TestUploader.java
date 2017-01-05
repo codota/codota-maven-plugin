@@ -32,6 +32,9 @@ public class TestUploader {
     // STEP 1: obtain a valid token.
     //         Without a valid token your upload request would be rejected.
     final String token = "<TEST_TOKEN>";
+    final String repoName = "myrepo/test";
+    final String lastPushed = "2016-12-30T03:33:12Z";
+    final String stars = "100";
 
     // optional: can change these as you wish
     final String groupId = "testGroup";
@@ -43,7 +46,8 @@ public class TestUploader {
         // STEP 2: update <FILENAME> to point to a valid filename on your system.
         String filename = "<FILENAME>";
         String uploadUrl = endpoint + "/" + groupId + "." + artifactId + "/" + version;
-        Uploader uploader = new Uploader(uploadUrl, token);
+
+        Uploader uploader = new Uploader(uploadUrl, token, repoName, lastPushed, stars);
         uploader.uploadFile(new File(filename));
     }
 }

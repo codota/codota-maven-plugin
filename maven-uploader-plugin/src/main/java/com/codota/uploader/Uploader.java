@@ -27,7 +27,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-
+import org.apache.http.entity.ContentType;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,9 +36,15 @@ public class Uploader {
     private final String endpoint;
     private final CloseableHttpClient httpClient;
     private final String token;
+    private final String repoName;
+    private final String lastPushed;
+    private final String stars;
 
-    public Uploader(String codotaEndpoint, String token) {
+    public Uploader(String codotaEndpoint, String token, String repoName, String lastPushed, String stars) {
         this.endpoint = codotaEndpoint;
+        this.repoName = repoName;
+        this.lastPushed = lastPushed;
+        this.stars = stars;
         this.httpClient = HttpClientBuilder.create().build();
         this.token = token;
     }
@@ -51,8 +57,14 @@ public class Uploader {
     private void uploadFile(File file, String uploadUrl) throws IOException {
             HttpPut putRequest = new HttpPut(uploadUrl);
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            builder.addPart("code", new FileBody(file));
+            builder.addBinaryBody("code", file, ContentType.APPLICATION_OCTET_STREAM, file.getName());
+            //builder.addPart("code", new FileBody(file));
+            builder.addTextBody("repoName", repoName);
+            builder.addTextBody("lastPushed", lastPushed);
+            builder.addTextBody("stars", stars);
+
             final HttpEntity entity = builder.build();
             putRequest.setEntity(entity);
 
