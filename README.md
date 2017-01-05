@@ -11,7 +11,10 @@ To submit your code follow these simple steps:
     ```
     mvn clean source:jar source:test-jar jar:test-jar package com.codota:codota-uploader:1.0:upload -Dcodota.token={your_token_here} -Dcodota.endpoint=https://upload.codota.com/artifacts -DskipAssembly -DskipTests -Dmaven.javadoc.skip=true -Dgpg.skip
     ```
-    
+    Also, you have the following optional parameters:
+    ```
+    -Dcodota.repoName={your_repo_name} -Dcodota.lastPushed={utc_format_datetime}
+    ```    
     Make sure to use the secure token you receive from Codota. Please make sure to keep your token private and secure.
     Indexing usually takes less than an hour - you'll get an email once it's ready
 
