@@ -1,5 +1,4 @@
 # Codota maven plugin
-This repo is the private version of codota-maven-plugin which is the "upstream" for this repo
 Maven plugin for [indexing java/scala code in Codota](https://www.codota.com/index-your-repo)
 
 You can easily send your Java code for indexing by adding this simple maven plugin which collects your artifacts and uploads them to your secure private Codota account.
