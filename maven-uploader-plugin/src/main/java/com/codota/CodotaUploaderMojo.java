@@ -75,24 +75,35 @@ public class CodotaUploaderMojo
 
 
     /**
-     * Codota repoName passed to the uploader
+     * Repository name passed to the uploader
      */
-    @Parameter(property = "repoName", defaultValue = "${codota.repoName}", required = true)
+    @Parameter(property = "repoName", defaultValue = "${codota.repoName}", required = false)
     private String repoName;
 
     /**
-     * Codota repo lastPushed passed to the uploader, string, utc format (i.e. 2016-12-24T11:23:11Z)
+     * Repository lastPushed passed to the uploader, string, utc format (i.e. 2016-12-24T11:23:11Z)
      */
-    @Parameter(property = "lastPushed", defaultValue = "${codota.lastPushed}", required = true)
+    @Parameter(property = "lastPushed", defaultValue = "${codota.lastPushed}", required = false)
     private String lastPushed;
 
 
     /**
-     * Codota endpoint passed to the uploader, string, int
+     * Repository GH  passed to the uploader, string, int
      */
-    @Parameter(property = "stars", defaultValue = "${codota.stars}", required = true)
+    @Parameter(property = "stars", defaultValue = "${codota.stars}", required = false)
     private String stars;
 
+    /**
+     * Repository url, used to calculate source url, string
+     */
+    @Parameter(property = "repoUrl", defaultValue = "${codota.repoUrl}", required = false)
+    private String repoUrl;
+
+    /**
+     * Base directory of the code, used to calculate source url, string
+     */
+    @Parameter(property = "baseDir", defaultValue = "${codota.baseDir}", required = false)
+    private String baseDir;
 
 
     @Parameter(property = "reportFileName")
@@ -113,7 +124,7 @@ public class CodotaUploaderMojo
          * @todo: add sanitization to the endpoint url string
          */
         final Uploader uploader;
-        uploader = new Uploader(uploadUrl(), token, repoName, lastPushed, stars);
+        uploader = new Uploader(uploadUrl(), token, repoName, lastPushed, stars, getSrcDirUrl());
 
         // Visit target directory and upload every jar file
         FileVisitor<Path> fv = new SimpleFileVisitor<Path>() {
@@ -183,11 +194,29 @@ public class CodotaUploaderMojo
         getLog().info("Codota repo name: " + repoName);
         getLog().info("Codota last pushed: " + lastPushed);
         getLog().info("Codota stars: " + stars);
+        getLog().info("Codota repoUrl: " + repoUrl);
+        getLog().info("Codota baseDir: " + baseDir);
+
     }
 
     private boolean shouldSendFile(Path path) {
         return path.toString().toLowerCase().endsWith(".jar") || path.toString().toLowerCase().endsWith(".war");
     }
 
+
+    private  String getSrcDirUrl() {
+        getLog().info("Codota getSrcDirUrl: " );
+
+        String src = null;
+        String srcDir = sourceDirectory.getPath();
+        if (baseDir != null && repoUrl !=null && srcDir.startsWith(baseDir)) {
+
+            src = repoUrl+ "/"+ srcDir.substring(baseDir.length())+"/";
+            src = src.replaceAll("//", "/");
+
+        }
+        return src;
+
+    }
 
 }

@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * To use this test:
@@ -35,6 +36,7 @@ public class TestUploader {
     final String repoName = "myrepo/test";
     final String lastPushed = "2016-12-30T03:33:12Z";
     final String stars = "100";
+    final String srcUrl = "https://github.com/translation-cards/translation-cards/tree/master";
 
     // optional: can change these as you wish
     final String groupId = "testGroup";
@@ -42,12 +44,12 @@ public class TestUploader {
     final String version = "1.0";
 
     @Test
-    public void testFileUpload() throws IOException {
+    public void testFileUpload() throws IOException, URISyntaxException {
         // STEP 2: update <FILENAME> to point to a valid filename on your system.
         String filename = "<FILENAME>";
         String uploadUrl = endpoint + "/" + groupId + "." + artifactId + "/" + version;
 
-        Uploader uploader = new Uploader(uploadUrl, token, repoName, lastPushed, stars);
+        Uploader uploader = new Uploader(uploadUrl, token, repoName, lastPushed, stars, "");
         uploader.uploadFile(new File(filename));
     }
 }
