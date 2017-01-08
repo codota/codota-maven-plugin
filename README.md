@@ -10,7 +10,7 @@ To submit your code follow these simple steps:
 * Build your project including sources and send to Codota for indexing by running the following command in your project directory
     
     ```
-    mvn clean source:jar source:test-jar jar:test-jar package com.codota:codota-uploader:1.0:upload -Dcodota.token={your_token_here} -Dcodota.endpoint=https://upload.codota.com/artifacts -DskipAssembly -DskipTests -Dmaven.javadoc.skip=true -Dgpg.skip
+    mvn clean source:jar source:test-jar jar:test-jar package com.codota:codota-uploader:1.0.3:upload -Dcodota.token={your_token_here} -Dcodota.endpoint=https://upload.codota.com/artifacts -DskipAssembly -DskipTests -Dmaven.javadoc.skip=true -Dgpg.skip
     ```
     Also, you have the following optional parameters:
     ```
