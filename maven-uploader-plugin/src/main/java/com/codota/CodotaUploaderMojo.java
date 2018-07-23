@@ -86,6 +86,11 @@ public class CodotaUploaderMojo
     @Parameter(property = "lastPushed", defaultValue = "${codota.lastPushed}", required = false)
     private String lastPushed;
 
+    /**
+     * Repository name passed to the uploader
+     */
+    @Parameter(property = "projectPrefix", defaultValue = "${codota.projectPrefix}", required = false)
+    private String projectPrefix;
 
     /**
      * Repository GH  passed to the uploader, string, int
@@ -166,11 +171,19 @@ public class CodotaUploaderMojo
     }
 
     /**
+     * Construct projectPrefix to append as the prefix of artifact name.
+     * Returns "" if projectPrefix is null or empty and "prefixName:" else.
+     */
+    private String safeProjectPrefix() {
+        return (this.projectPrefix == null || this.projectPrefix.trim().equals("")) ? "" :  this.projectPrefix+":";
+    }
+
+    /**
      * Construct artifact name from groupId and artifactId.
      * Can add version if you care to make this distinction when uploading artifacts
      */
     private String artifactName() {
-        return this.groupId + "." + this.artifactId;
+        return safeProjectPrefix() + this.groupId + "." + this.artifactId;
     }
 
     private String uploadUrl() {
