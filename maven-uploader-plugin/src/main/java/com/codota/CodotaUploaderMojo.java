@@ -76,7 +76,7 @@ public class CodotaUploaderMojo
 
 
     /**
-     * Repository name passed to the uploader
+     * Optional project prefix passed to the uploader, will be prepended to the artifact name
      */
     @Parameter(property = "projectPrefix", defaultValue = "${codota.projectPrefix}", required = false)
     private String projectPrefix;
