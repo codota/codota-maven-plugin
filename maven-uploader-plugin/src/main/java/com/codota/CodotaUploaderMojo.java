@@ -74,18 +74,12 @@ public class CodotaUploaderMojo
     private String endpoint;
 
 
-    /**
-     * Repository name passed to the uploader
-     */
-    @Parameter(property = "repoName", defaultValue = "${codota.repoName}", required = false)
-    private String repoName;
 
     /**
-     * Repository lastPushed passed to the uploader, string, utc format (i.e. 2016-12-24T11:23:11Z)
+     * Optional project prefix passed to the uploader, will be prepended to the artifact name
      */
-    @Parameter(property = "lastPushed", defaultValue = "${codota.lastPushed}", required = false)
-    private String lastPushed;
-
+    @Parameter(property = "projectPrefix", defaultValue = "${codota.projectPrefix}", required = false)
+    private String projectPrefix;
 
     /**
      * Repository GH  passed to the uploader, string, int
@@ -124,7 +118,7 @@ public class CodotaUploaderMojo
          * @todo: add sanitization to the endpoint url string
          */
         final Uploader uploader;
-        uploader = new Uploader(uploadUrl(), token, repoName, lastPushed, stars, getSrcDirUrl());
+        uploader = new Uploader(uploadUrl(), token, stars, getSrcDirUrl());
 
         // Visit target directory and upload every jar file
         FileVisitor<Path> fv = new SimpleFileVisitor<Path>() {
@@ -166,11 +160,19 @@ public class CodotaUploaderMojo
     }
 
     /**
+     * Construct projectPrefix to append as the prefix of artifact name.
+     * Returns "" if projectPrefix is null or empty and "prefixName:" else.
+     */
+    private String safeProjectPrefix() {
+        return (this.projectPrefix == null || this.projectPrefix.trim().equals("")) ? "" :  this.projectPrefix+":";
+    }
+
+    /**
      * Construct artifact name from groupId and artifactId.
      * Can add version if you care to make this distinction when uploading artifacts
      */
     private String artifactName() {
-        return this.groupId + "." + this.artifactId;
+        return safeProjectPrefix() + this.groupId + "." + this.artifactId;
     }
 
     private String uploadUrl() {
@@ -191,8 +193,6 @@ public class CodotaUploaderMojo
         getLog().info("Build directory:" + buildDirectory);
         getLog().info("Source directory:" + sourceDirectory);
         getLog().info("Codota token exists:" + (token != null));
-        getLog().info("Codota repo name: " + repoName);
-        getLog().info("Codota last pushed: " + lastPushed);
         getLog().info("Codota stars: " + stars);
         getLog().info("Codota repoUrl: " + repoUrl);
         getLog().info("Codota baseDir: " + baseDir);

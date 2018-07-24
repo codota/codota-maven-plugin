@@ -39,15 +39,11 @@ public class Uploader {
     private final String endpoint;
     private final CloseableHttpClient httpClient;
     private final String token;
-    private final String repoName;
-    private final String lastPushed;
     private final String stars;
     private final String srcDirUrl;
 
-    public Uploader(String codotaEndpoint, String token, String repoName, String lastPushed, String stars, String srcDirUrl) {
+    public Uploader(String codotaEndpoint, String token, String stars, String srcDirUrl) {
         this.endpoint = codotaEndpoint;
-        this.repoName = repoName;
-        this.lastPushed = lastPushed;
         this.stars = stars;
         this.httpClient = HttpClientBuilder.create().build();
         this.token = token;
@@ -64,13 +60,6 @@ public class Uploader {
 
             URIBuilder uriBuilder = new URIBuilder(uploadUrl);
 
-            if (repoName != null){
-
-                uriBuilder.setParameter("repoName", repoName);
-            }
-            if (lastPushed != null) {
-                uriBuilder.setParameter("lastPushed", lastPushed);
-            }
             if (stars !=null) {
                 uriBuilder.setParameter("stars", stars);
 
